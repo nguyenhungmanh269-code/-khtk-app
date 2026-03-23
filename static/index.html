@@ -157,6 +157,9 @@ textarea{resize:vertical}
     </div>
     <div class="fl" id="flist"></div>
   </div>
+  <div class="card" id="status-card" style="display:none">
+    <div id="file-status-table"></div>
+  </div>
   <div class="card">
     <div class="ct">Đối chiếu danh mục hồ sơ chuẩn</div>
     <div class="ckg" id="cklist"></div>
@@ -277,34 +280,117 @@ function handleFiles(fl){
   });
   renderFL();
   document.getElementById('fcnt').textContent=ST.files.length+' file';
+  document.getElementById('status-card').style.display='';
 }
 function setDot(name,cls){const el=document.getElementById('dot-'+CSS.escape(name));if(el)el.className='dot '+cls;}
+// fileInfo[name] = {chars, method, status}
+const fileInfo = {};
+
 function readFile(f){
   const ext=(f.name.split('.').pop()||'').toLowerCase();
   setDot(f.name,'da');
+  fileInfo[f.name]={chars:0,method:'...',status:'reading'};
   if(ext==='pdf'){
     const fd=new FormData();fd.append('file',f);
     fetch('/api/extract-pdf',{method:'POST',body:fd})
-      .then(r=>r.json()).then(d=>{ST.rawContents[f.name]={type:'text',text:d.text||'(rỗng)',name:f.name};setDot(f.name,'dg');})
-      .catch(()=>{ST.rawContents[f.name]={type:'text',text:'(Lỗi PDF)',name:f.name};setDot(f.name,'dr');});
+      .then(r=>r.json()).then(d=>{
+        ST.rawContents[f.name]={type:'text',text:d.text||'',name:f.name};
+        fileInfo[f.name]={chars:d.chars||0,method:d.method||'digital',status:d.status||'ok'};
+        setDot(f.name, d.chars>100?'dg':'dr');
+        renderFL();
+      }).catch(err=>{
+        ST.rawContents[f.name]={type:'text',text:'(Lỗi đọc PDF)',name:f.name};
+        fileInfo[f.name]={chars:0,method:'error',status:'error'};
+        setDot(f.name,'dr'); renderFL();
+      });
   } else if(ext==='docx'){
     const r=new FileReader();r.onload=e=>{
-      mammoth.extractRawText({arrayBuffer:e.target.result}).then(res=>{ST.rawContents[f.name]={type:'text',text:res.value.slice(0,10000),name:f.name};setDot(f.name,'dg');}).catch(()=>{ST.rawContents[f.name]={type:'text',text:'(Lỗi DOCX)',name:f.name};setDot(f.name,'dr');});
+      mammoth.extractRawText({arrayBuffer:e.target.result}).then(res=>{
+        const t=res.value.slice(0,10000);
+        ST.rawContents[f.name]={type:'text',text:t,name:f.name};
+        fileInfo[f.name]={chars:t.length,method:'docx',status:t.length>50?'ok':'empty'};
+        setDot(f.name,'dg'); renderFL();
+      }).catch(()=>{
+        ST.rawContents[f.name]={type:'text',text:'(Lỗi DOCX)',name:f.name};
+        fileInfo[f.name]={chars:0,method:'docx',status:'error'};
+        setDot(f.name,'dr'); renderFL();
+      });
     };r.readAsArrayBuffer(f);
   } else if(['xlsx','xls'].includes(ext)){
     const r=new FileReader();r.onload=e=>{
-      try{const wb=XLSX.read(e.target.result,{type:'array'});let t='';wb.SheetNames.slice(0,4).forEach(s=>{t+=`\n[Sheet:${s}]\n`+XLSX.utils.sheet_to_csv(wb.Sheets[s]).slice(0,4000);});ST.rawContents[f.name]={type:'text',text:t.slice(0,10000),name:f.name};setDot(f.name,'dg');}catch{ST.rawContents[f.name]={type:'text',text:'(Lỗi Excel)',name:f.name};setDot(f.name,'dr');}
+      try{
+        const wb=XLSX.read(e.target.result,{type:'array'});
+        let t='';wb.SheetNames.slice(0,4).forEach(s=>{t+=`\n[Sheet:${s}]\n`+XLSX.utils.sheet_to_csv(wb.Sheets[s]).slice(0,4000);});
+        t=t.slice(0,10000);
+        ST.rawContents[f.name]={type:'text',text:t,name:f.name};
+        fileInfo[f.name]={chars:t.length,method:'excel',status:t.length>50?'ok':'empty'};
+        setDot(f.name,'dg'); renderFL();
+      }catch{
+        ST.rawContents[f.name]={type:'text',text:'(Lỗi Excel)',name:f.name};
+        fileInfo[f.name]={chars:0,method:'excel',status:'error'};
+        setDot(f.name,'dr'); renderFL();
+      }
     };r.readAsArrayBuffer(f);
   } else {
-    ST.rawContents[f.name]={type:'text',text:`[File: ${f.name}]`,name:f.name};setDot(f.name,'dg');
+    ST.rawContents[f.name]={type:'text',text:`[File: ${f.name}]`,name:f.name};
+    fileInfo[f.name]={chars:10,method:'other',status:'ok'};
+    setDot(f.name,'dg'); renderFL();
   }
 }
-function removeFile(name){ST.files=ST.files.filter(f=>f.name!==name);delete ST.rawContents[name];renderFL();document.getElementById('fcnt').textContent=ST.files.length+' file';}
+
+function removeFile(name){
+  ST.files=ST.files.filter(f=>f.name!==name);
+  delete ST.rawContents[name]; delete fileInfo[name];
+  renderFL(); document.getElementById('fcnt').textContent=ST.files.length+' file';
+}
+
 function renderFL(){
+  // Danh sách file
   document.getElementById('flist').innerHTML=ST.files.map(f=>`
-    <div class="fi"><span style="font-size:14px">${ficon(f.name)}</span><span class="fn" title="${f.name}">${f.name}</span><span class="fsz">${fsz(f.size)}</span>
-    <div class="dot ${ST.rawContents[f.name]?'dg':'da'}" id="dot-${CSS.escape(f.name)}"></div>
-    <button class="rmb" onclick="removeFile('${f.name.replace(/'/g,"\\'")}')">✕</button></div>`).join('');
+    <div class="fi">
+      <span style="font-size:14px">${ficon(f.name)}</span>
+      <span class="fn" title="${f.name}">${f.name}</span>
+      <span class="fsz">${fsz(f.size)}</span>
+      <div class="dot ${fileInfo[f.name]?.status==='ok'?'dg':fileInfo[f.name]?.status==='error'?'dr':'da'}" id="dot-${CSS.escape(f.name)}"></div>
+      <button class="rmb" onclick="removeFile('${f.name.replace(/'/g,"\\'")}')">✕</button>
+    </div>`).join('');
+
+  // Bảng trạng thái đọc file
+  const tableEl = document.getElementById('file-status-table');
+  if(!tableEl) return;
+  const methodLabel={digital:'PDF điện tử',scan:'PDF scan→OCR',docx:'Word',excel:'Excel',error:'Lỗi',other:'Khác','...':'Đang đọc...'};
+  const rows = ST.files.map(f=>{
+    const info = fileInfo[f.name] || {chars:0,method:'...',status:'reading'};
+    const ok = info.status==='ok';
+    const err = info.status==='error'||info.status==='empty';
+    const reading = info.status==='reading';
+    const icon = reading?'⏳':ok?'✅':err?'❌':'⚠️';
+    const charsTxt = info.chars>0?`${info.chars.toLocaleString()} ký tự`:'—';
+    const colorClass = reading?'color:var(--amber)':ok?'color:var(--green)':'color:var(--red)';
+    return `<tr>
+      <td style="padding:6px 10px;border:1px solid var(--border);font-size:11px;color:var(--text)">${icon} ${f.name}</td>
+      <td style="padding:6px 10px;border:1px solid var(--border);font-size:11px;${colorClass}">${methodLabel[info.method]||info.method}</td>
+      <td style="padding:6px 10px;border:1px solid var(--border);font-size:11px;${colorClass};font-family:var(--mono)">${charsTxt}</td>
+      <td style="padding:6px 10px;border:1px solid var(--border);font-size:11px;color:var(--text3)">${ok?'Sẵn sàng thẩm định':reading?'Đang xử lý...':'Cần kiểm tra'}</td>
+    </tr>`;
+  }).join('');
+
+  const okCount = ST.files.filter(f=>fileInfo[f.name]?.status==='ok').length;
+  const totalChars = Object.values(fileInfo).reduce((s,v)=>s+(v.chars||0),0);
+  tableEl.innerHTML=`
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+      <div style="font-size:12px;color:var(--text2)">Trạng thái đọc file</div>
+      <div style="font-size:11px;color:var(--text3)">${okCount}/${ST.files.length} file OK · ${totalChars.toLocaleString()} ký tự tổng</div>
+    </div>
+    <table style="width:100%;border-collapse:collapse">
+      <tr>
+        <th style="padding:6px 10px;border:1px solid var(--border);background:var(--bg4);color:var(--text3);font-size:10px;text-align:left">Tên file</th>
+        <th style="padding:6px 10px;border:1px solid var(--border);background:var(--bg4);color:var(--text3);font-size:10px;text-align:left">Phương thức</th>
+        <th style="padding:6px 10px;border:1px solid var(--border);background:var(--bg4);color:var(--text3);font-size:10px;text-align:left">Nội dung đọc được</th>
+        <th style="padding:6px 10px;border:1px solid var(--border);background:var(--bg4);color:var(--text3);font-size:10px;text-align:left">Trạng thái</th>
+      </tr>
+      ${rows}
+    </table>`;
 }
 function s2next(){
   if(!ST.files.length){alert('Vui lòng upload ít nhất 1 file hồ sơ');return;}
