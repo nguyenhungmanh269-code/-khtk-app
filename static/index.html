@@ -3,39 +3,38 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Thẩm Định KHTK — Ban QLHS&CT</title>
+<title>Thẩm Định KHTK — Ban QLHS&CT v3</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#0e1117;--bg2:#161b27;--bg3:#1e2535;--bg4:#252d3d;--border:#2d3748;--border2:#3d4f6b;--gold:#c9a84c;--gold2:#e8c96e;--green:#2ec99e;--red:#e85555;--amber:#f5a623;--text:#e8ecf4;--text2:#a0aec0;--text3:#6b7a96;--font:'IBM Plex Sans',sans-serif;--mono:'IBM Plex Mono',monospace}
+:root{--bg:#0e1117;--bg2:#161b27;--bg3:#1e2535;--bg4:#252d3d;--border:#2d3748;--border2:#3d4f6b;--gold:#c9a84c;--gold2:#e8c96e;--green:#2ec99e;--red:#e85555;--amber:#f5a623;--blue:#4a9eff;--text:#e8ecf4;--text2:#a0aec0;--text3:#6b7a96;--font:'IBM Plex Sans',sans-serif;--mono:'IBM Plex Mono',monospace}
 body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px;min-height:100vh}
 .shell{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
 .sidebar{background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
-.main{overflow-y:auto;padding:28px 36px;max-width:940px}
+.main{overflow-y:auto;padding:28px 36px;max-width:960px}
 .logo{padding:18px 16px;border-bottom:1px solid var(--border)}
 .logo-t{font-size:11px;font-weight:600;color:var(--gold2);letter-spacing:.08em;text-transform:uppercase}
 .logo-s{font-size:10px;color:var(--text3);margin-top:2px}
-.s-label{font-size:10px;font-weight:600;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;padding:10px 14px 4px}
-.s-item{display:flex;align-items:center;gap:8px;padding:8px 14px;cursor:pointer;border-left:3px solid transparent;transition:background .12s}
-.s-item:hover{background:var(--bg3)}
-.s-item.active{background:var(--bg4);border-left-color:var(--gold)}
-.s-item.done .snum{background:var(--green);border-color:var(--green);color:#0e1117}
-.s-item.active .snum{background:var(--gold);border-color:var(--gold);color:#0e1117}
-.snum{width:20px;height:20px;border-radius:50%;background:var(--bg4);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:var(--text3);flex-shrink:0}
-.sname{font-size:12px;color:var(--text2)}
-.s-item.active .sname{color:var(--text);font-weight:500}
+.logo-v{font-size:10px;color:var(--amber);margin-top:1px}
+.sl{font-size:10px;font-weight:600;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;padding:10px 14px 4px}
+.si{display:flex;align-items:center;gap:8px;padding:8px 14px;cursor:pointer;border-left:3px solid transparent;transition:background .12s}
+.si:hover{background:var(--bg3)}.si.active{background:var(--bg4);border-left-color:var(--gold)}
+.si.done .sn{background:var(--green);border-color:var(--green);color:#0e1117}
+.si.active .sn{background:var(--gold);border-color:var(--gold);color:#0e1117}
+.sn{width:20px;height:20px;border-radius:50%;background:var(--bg4);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:var(--text3);flex-shrink:0}
+.sname{font-size:12px;color:var(--text2)}.si.active .sname{color:var(--text);font-weight:500}
 .rule{display:flex;gap:7px;padding:4px 14px;font-size:11px;color:var(--text3);line-height:1.5}
 .sfoot{padding:10px 14px;margin-top:auto;border-top:1px solid var(--border);font-size:10px;color:var(--text3)}
 .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;gap:12px}
-.topbar h1{font-size:18px;font-weight:600}
-.topbar p{font-size:12px;color:var(--text3);margin-top:2px}
+.topbar h1{font-size:18px;font-weight:600}.topbar p{font-size:12px;color:var(--text3);margin-top:2px}
 .badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500;white-space:nowrap}
 .bg{background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.3);color:var(--gold2)}
 .bgreen{background:rgba(46,201,158,.1);border:1px solid rgba(46,201,158,.3);color:var(--green)}
 .bred{background:rgba(232,85,85,.1);border:1px solid rgba(232,85,85,.3);color:var(--red)}
 .bamber{background:rgba(245,166,35,.1);border:1px solid rgba(245,166,35,.3);color:var(--amber)}
+.bblue{background:rgba(74,158,255,.1);border:1px solid rgba(74,158,255,.3);color:var(--blue)}
 .card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:16px}
 .ct{font-size:11px;font-weight:600;color:var(--gold2);letter-spacing:.04em;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:7px}
 .ct::before{content:'';display:block;width:3px;height:12px;background:var(--gold);border-radius:2px}
@@ -47,14 +46,11 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 .fn{font-size:12px;color:var(--text);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .fsz{font-size:11px;color:var(--text3);flex-shrink:0}
 .dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-.dg{background:var(--green)}
-.da{background:var(--amber);animation:pulse .8s infinite}
-.dr{background:var(--red)}
-.dgr{background:var(--border2)}
+.dg{background:var(--green)}.da{background:var(--amber);animation:pulse .8s infinite}
+.dr{background:var(--red)}.dgr{background:var(--border2)}
 .rmb{background:none;border:none;color:var(--text3);cursor:pointer;font-size:13px;padding:1px 4px;line-height:1}
 .rmb:hover{color:var(--red)}
-.fg{display:flex;flex-direction:column;gap:4px}
-.fg2{grid-column:span 2}
+.fg{display:flex;flex-direction:column;gap:4px}.fg2{grid-column:span 2}
 .fgrid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
 label{font-size:10px;font-weight:500;color:var(--text3);text-transform:uppercase;letter-spacing:.06em}
 input,select,textarea{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:8px 10px;color:var(--text);font-family:var(--font);font-size:13px;transition:border .12s;outline:none;width:100%}
@@ -62,24 +58,34 @@ input:focus,select:focus,textarea:focus{border-color:var(--gold)}
 select option{background:var(--bg3)}
 textarea{resize:vertical}
 .btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:7px;border:none;font-family:var(--font);font-size:13px;font-weight:500;cursor:pointer;transition:all .12s}
-.bp{background:var(--gold);color:#0e1117}.bp:hover{background:var(--gold2)}.bp:disabled{background:var(--bg4);color:var(--text3);cursor:not-allowed}
+.bp{background:var(--gold);color:#0e1117}.bp:hover{background:var(--gold2)}
+.bp:disabled{background:var(--bg4);color:var(--text3);cursor:not-allowed}
 .bgh{background:transparent;border:1px solid var(--border);color:var(--text2)}.bgh:hover{border-color:var(--border2)}
 .brow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .pw{margin-bottom:10px}
 .pt{display:flex;justify-content:space-between;margin-bottom:5px;font-size:12px;color:var(--text3)}
 .pt span:last-child{color:var(--gold)}
 .pb{height:4px;background:var(--bg4);border-radius:2px;overflow:hidden}
-.pf{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:2px;transition:width .4s}
+.pf{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:2px;transition:width .5s}
 .think{display:flex;align-items:center;gap:8px;color:var(--text3);font-size:12px;padding:8px 0}
 .dots span{width:5px;height:5px;border-radius:50%;background:var(--gold);animation:dp .8s infinite ease-in-out both;display:inline-block;margin-right:3px}
 .dots span:nth-child(2){animation-delay:.16s}.dots span:nth-child(3){animation-delay:.32s}
 @keyframes dp{0%,80%,100%{transform:scale(.6);opacity:.3}40%{transform:scale(1);opacity:1}}
 @keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
-.logbox{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:14px;font-family:var(--mono);font-size:12px;line-height:1.8;color:var(--text2);max-height:300px;overflow-y:auto;white-space:pre-wrap;word-break:break-word}
-.lo{color:var(--gold2)}.lg{color:var(--green)}.la{color:var(--amber)}.lr{color:var(--red)}
+.logbox{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:14px;font-family:var(--mono);font-size:11px;line-height:1.8;color:var(--text2);max-height:320px;overflow-y:auto;white-space:pre-wrap;word-break:break-word}
+.lo{color:var(--gold2)}.lg{color:var(--green)}.la{color:var(--amber)}.lr{color:var(--red)}.lb{color:var(--blue)}
+.step-bar{display:flex;gap:4px;margin-bottom:16px}
+.step-pill{flex:1;padding:6px 8px;border-radius:6px;font-size:11px;font-weight:500;text-align:center;background:var(--bg3);color:var(--text3);border:1px solid var(--border)}
+.step-pill.active{background:rgba(201,168,76,.15);color:var(--gold2);border-color:rgba(201,168,76,.3)}
+.step-pill.done{background:rgba(46,201,158,.08);color:var(--green);border-color:rgba(46,201,158,.2)}
 .ckg{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-top:6px}
 .ck{display:flex;align-items:center;gap:6px;padding:4px 7px;border-radius:5px;font-size:11px;color:var(--text3)}
 .ck.ok{background:rgba(46,201,158,.07);color:var(--green)}
+.data-card{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:10px 12px;margin-bottom:6px;font-size:11px}
+.data-card .fn{font-weight:600;color:var(--gold2);margin-bottom:4px;font-size:12px}
+.data-row{display:flex;justify-content:space-between;padding:2px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.data-row:last-child{border-bottom:none}
+.data-key{color:var(--text3)}.data-val{color:var(--text);font-family:var(--mono);font-size:11px}
 @media print{.sidebar,.brow,.no-print{display:none!important}.shell{grid-template-columns:1fr}.main{padding:10px;max-width:100%}body{background:#fff;color:#000}.card{border:1px solid #ccc;background:#fff}}
 @media(max-width:680px){.shell{grid-template-columns:1fr}.sidebar{display:none}.main{padding:14px}.fgrid,.fg2{grid-template-columns:1fr;grid-column:span 1}}
 </style>
@@ -87,23 +93,27 @@ textarea{resize:vertical}
 <body>
 <div class="shell">
 <aside class="sidebar">
-  <div class="logo"><div class="logo-t">Ban QLHS&CT</div><div class="logo-s">Thẩm định Kế hoạch Triển khai</div></div>
+  <div class="logo">
+    <div class="logo-t">Ban QLHS&CT</div>
+    <div class="logo-s">Thẩm định Kế hoạch Triển khai</div>
+    <div class="logo-v">⚡ Phiên bản 3.0 — 2 bước</div>
+  </div>
   <div style="padding:8px 0">
-    <div class="s-label">Quy trình</div>
-    <div class="s-item active" data-s="1" onclick="go(1)"><div class="snum">1</div><div class="sname">Thông tin dự án</div></div>
-    <div class="s-item" data-s="2" onclick="go(2)"><div class="snum">2</div><div class="sname">Upload hồ sơ</div></div>
-    <div class="s-item" data-s="3" onclick="go(3)"><div class="snum">3</div><div class="sname">Thẩm định AI</div></div>
-    <div class="s-item" data-s="4" onclick="go(4)"><div class="snum">4</div><div class="sname">Báo cáo kết quả</div></div>
-    <div class="s-item" data-s="5" onclick="go(5)"><div class="snum">5</div><div class="sname">Dự thảo Quyết định</div></div>
+    <div class="sl">Quy trình</div>
+    <div class="si active" data-s="1" onclick="go(1)"><div class="sn">1</div><div class="sname">Thông tin dự án</div></div>
+    <div class="si" data-s="2" onclick="go(2)"><div class="sn">2</div><div class="sname">Upload hồ sơ</div></div>
+    <div class="si" data-s="3" onclick="go(3)"><div class="sn">3</div><div class="sname">Bước 1: Trích xuất số liệu</div></div>
+    <div class="si" data-s="4" onclick="go(4)"><div class="sn">4</div><div class="sname">Bước 2: Tổng hợp báo cáo</div></div>
+    <div class="si" data-s="5" onclick="go(5)"><div class="sn">5</div><div class="sname">Báo cáo kết quả</div></div>
+    <div class="si" data-s="6" onclick="go(6)"><div class="sn">6</div><div class="sname">Dự thảo Quyết định</div></div>
   </div>
   <div style="border-top:1px solid var(--border);padding:8px 0">
-    <div class="s-label">Nguyên tắc</div>
+    <div class="sl">Chuẩn mẫu áp dụng</div>
+    <div class="rule">📄 Mẫu Cầu Châu Phong FINAL</div>
     <div class="rule">⚖️ 8 phép đối chiếu bắt buộc</div>
-    <div class="rule">📋 Mẫu Phiếu KQ thẩm định</div>
-    <div class="rule">🎯 Đối chiếu BSC Tây An</div>
-    <div class="rule">📉 Chương trình giảm lỗ ≥7%</div>
     <div class="rule">🔢 Dòng H ngân sách vòng đời</div>
-    <div class="rule">📄 Đọc PDF trực tiếp trên server</div>
+    <div class="rule">📉 Chương trình giảm lỗ ≥7%</div>
+    <div class="rule">📊 Phụ biểu 01 dòng tiền tháng</div>
   </div>
   <div class="sfoot">Project Hùng Xoăn · V3 · 2026</div>
 </aside>
@@ -122,12 +132,13 @@ textarea{resize:vertical}
       <div class="fg"><label>Địa điểm</label><input id="pdd" placeholder="VD: Xã Hùng Chân, tỉnh Nghệ An"/></div>
       <div class="fg"><label>Thời gian thực hiện KH</label><input id="ptg" placeholder="VD: 20/01/2026 – 31/08/2026"/></div>
       <div class="fg"><label>Giá trị HĐ phần Công ty (đồng)</label><input id="pgt" type="number" placeholder="18427982000"/></div>
+      <div class="fg"><label>Tạm ứng đã nhận (đồng)</label><input id="ptu" type="number" placeholder="5528000000"/></div>
       <div class="fg"><label>Nguồn vốn</label>
         <select id="pnv"><option value="">-- Chọn --</option><option value="dtc">Vốn đầu tư công</option><option value="tapd">Vốn Tập đoàn</option><option value="khac">Nguồn khác</option></select>
       </div>
-      <div class="fg fg2"><label>Nhóm công trình / Đặc thù rủi ro</label><textarea id="pnh" rows="2" placeholder="VD: Công trình cầu trên tuyến đang khai thác; rủi ro cẩu lắp dầm, làm việc trên cao..."></textarea></div>
-      <div class="fg"><label>Tạm ứng đã nhận (đồng)</label><input id="ptu" type="number" placeholder="5528000000"/></div>
-      <div class="fg"><label>Người thẩm định</label><input id="pnd" placeholder="Họ tên cán bộ Ban QLHS&CT"/></div>
+      <div class="fg fg2"><label>Nhóm công trình / Đặc thù rủi ro</label><textarea id="pnh" rows="2" placeholder="VD: Công trình cầu trên tuyến đang khai thác; có rủi ro cẩu lắp dầm, làm việc trên cao..."></textarea></div>
+      <div class="fg"><label>Người thẩm định</label><input id="pnd" placeholder="Họ tên — Ban QLHS&CT"/></div>
+      <div class="fg"><label>Ghi chú thêm</label><input id="pgc" placeholder="Tùy chọn"/></div>
     </div>
   </div>
   <div class="brow"><button class="btn bp" onclick="s1next()">Tiếp theo →</button></div>
@@ -135,7 +146,7 @@ textarea{resize:vertical}
 
 <!-- S2 -->
 <div id="s2" style="display:none">
-  <div class="topbar"><div><h1>Upload hồ sơ KHTK</h1><p>Kéo thả tất cả file — PDF được đọc trực tiếp trên server</p></div><div class="badge bg" id="fcnt">0 file</div></div>
+  <div class="topbar"><div><h1>Upload hồ sơ KHTK</h1><p>Kéo thả tất cả file — PDF đọc trực tiếp trên server</p></div><div class="badge bg" id="fcnt">0 file</div></div>
   <div class="card">
     <div class="ct">Tải lên hồ sơ</div>
     <div class="dz" id="dz">
@@ -147,39 +158,68 @@ textarea{resize:vertical}
     <div class="fl" id="flist"></div>
   </div>
   <div class="card">
-    <div class="ct">Đối chiếu danh mục chuẩn</div>
+    <div class="ct">Đối chiếu danh mục hồ sơ chuẩn</div>
     <div class="ckg" id="cklist"></div>
   </div>
   <div class="brow">
     <button class="btn bgh" onclick="go(1)">← Quay lại</button>
-    <button class="btn bp" onclick="s2next()">Bắt đầu thẩm định →</button>
+    <button class="btn bp" onclick="s2next()">Bắt đầu xử lý →</button>
   </div>
 </div>
 
-<!-- S3 -->
+<!-- S3: Bước 1 Extract -->
 <div id="s3" style="display:none">
-  <div class="topbar"><div><h1>Tiến hành thẩm định</h1><p>AI đọc hồ sơ và đối chiếu theo 8 phép bắt buộc + biểu mẫu chuẩn</p></div><div class="badge bamber" id="s3b">Đang xử lý</div></div>
+  <div class="topbar"><div><h1>Bước 1: Trích xuất số liệu</h1><p>AI đọc từng file, chuẩn hoá số liệu thành dữ liệu có cấu trúc</p></div><div class="badge bamber" id="s3b">Đang xử lý</div></div>
+  <div class="step-bar">
+    <div class="step-pill active" id="pill1">1. Đọc & trích xuất</div>
+    <div class="step-pill" id="pill2">2. Tổng hợp báo cáo</div>
+    <div class="step-pill" id="pill3">3. Soạn Quyết định</div>
+  </div>
   <div class="card">
     <div class="ct">Tiến trình</div>
     <div class="pw"><div class="pt"><span id="plb">Chuẩn bị...</span><span id="ppct">0%</span></div><div class="pb"><div class="pf" id="pf" style="width:0%"></div></div></div>
     <div class="think" id="tbox"><div class="dots"><span></span><span></span><span></span></div><span id="ttxt">Đang khởi động...</span></div>
   </div>
   <div class="card"><div class="ct">Nhật ký xử lý</div><div class="logbox" id="logbox">Chờ bắt đầu...</div></div>
-  <div id="s3act" style="display:none" class="brow"><button class="btn bp" onclick="go(4)">Xem báo cáo →</button></div>
+  <div class="card" id="extracted-data-card" style="display:none">
+    <div class="ct">Dữ liệu đã trích xuất</div>
+    <div id="extracted-data-list"></div>
+  </div>
+  <div id="s3act" style="display:none" class="brow">
+    <button class="btn bp" onclick="runAppraisal()">Bước 2: Tổng hợp báo cáo →</button>
+  </div>
 </div>
 
-<!-- S4 -->
+<!-- S4: Bước 2 Appraise -->
 <div id="s4" style="display:none">
+  <div class="topbar"><div><h1>Bước 2: Tổng hợp báo cáo</h1><p>AI viết báo cáo theo biểu mẫu chuẩn Cầu Châu Phong</p></div><div class="badge bblue" id="s4b">Đang soạn</div></div>
+  <div class="step-bar">
+    <div class="step-pill done" id="pill1b">1. Trích xuất ✓</div>
+    <div class="step-pill active" id="pill2b">2. Tổng hợp báo cáo</div>
+    <div class="step-pill" id="pill3b">3. Soạn Quyết định</div>
+  </div>
+  <div class="card">
+    <div class="pw"><div class="pt"><span id="plb2">Đang tổng hợp...</span><span id="ppct2">0%</span></div><div class="pb"><div class="pf" id="pf2" style="width:0%"></div></div></div>
+    <div class="think" id="tbox2"><div class="dots"><span></span><span></span><span></span></div><span id="ttxt2">Đang soạn báo cáo theo mẫu Cầu Châu Phong...</span></div>
+  </div>
+  <div class="card"><div class="logbox" id="logbox2">Chờ bắt đầu...</div></div>
+  <div id="s4act" style="display:none" class="brow">
+    <button class="btn bp" onclick="go(5)">Xem báo cáo →</button>
+  </div>
+</div>
+
+<!-- S5: Báo cáo -->
+<div id="s5" style="display:none">
   <div class="topbar"><div><h1>Báo cáo Kết quả Thẩm định</h1><p id="repsub"></p></div>
-    <div class="brow no-print"><button class="btn bgh" onclick="window.print()">🖨 In báo cáo</button><button class="btn bp" onclick="go(5)">Soạn Quyết định →</button></div>
+    <div class="brow no-print"><button class="btn bgh" onclick="window.print()">🖨 In báo cáo</button><button class="btn bp" onclick="go(6)">Soạn Quyết định →</button></div>
   </div>
   <div id="repcontent"></div>
 </div>
 
-<!-- S5 -->
-<div id="s5" style="display:none">
+<!-- S6: Quyết định -->
+<div id="s6" style="display:none">
   <div class="topbar"><div><h1>Dự thảo Quyết định Phê duyệt</h1><p>Theo mẫu chuẩn đã chốt với Tổng Giám đốc</p></div>
-    <div class="brow no-print"><button class="btn bgh" onclick="window.print()">🖨 In Quyết định</button><button class="btn bgh" onclick="go(4)">← Báo cáo</button></div>
+    <div class="brow no-print"><button class="btn bgh" onclick="window.print()">🖨 In Quyết định</button><button class="btn bgh" onclick="go(5)">← Báo cáo</button></div>
   </div>
   <div id="deccontent"></div>
 </div>
@@ -189,14 +229,14 @@ textarea{resize:vertical}
 
 <script>
 const CKL=[
-  {c:'1',n:'Hợp đồng xây dựng',kw:['hop dong','hd ']},
-  {c:'1.1',n:'Bảng tổng hợp ý kiến HĐ',kw:['tong hop','hoi dong']},
-  {c:'1.2',n:'Thông tin nguồn vốn',kw:['nguon von','thong tin nguon']},
-  {c:'1.3',n:'KHCV & ngân sách vòng đời',kw:['khcv','ngan sach','vong doi']},
+  {c:'1',n:'Hợp đồng xây dựng',kw:['hop dong','hd ','238','230']},
+  {c:'1.1',n:'Bảng tổng hợp ý kiến HĐ',kw:['tong hop','hoi dong','1.1']},
+  {c:'1.2',n:'Thông tin nguồn vốn',kw:['nguon von','1.2']},
+  {c:'1.3',n:'KHCV & ngân sách vòng đời',kw:['khcv','ngan sach','vong doi','1.3']},
   {c:'1.4',n:'Bảng tiến độ Gantt',kw:['gantt','tien do','1.4']},
   {c:'1.5',n:'Kế hoạch doanh thu',kw:['doanh thu','1.5']},
   {c:'2.1',n:'Hồ sơ điều kiện & mặt bằng',kw:['mat bang','dieu kien','2.1']},
-  {c:'2.2',n:'HSTK điều chỉnh',kw:['thiet ke','hstk','dieu chinh']},
+  {c:'2.2',n:'HSTK điều chỉnh',kw:['thiet ke','hstk','dieu chinh','2.2']},
   {c:'2.3',n:'Nguồn lực thi công',kw:['nguon luc','cung ung','2.3']},
   {c:'2.4',n:'Kế hoạch nhân sự & BCH',kw:['nhan su','bch','2.4']},
   {c:'2.5',n:'Hồ sơ CDTC / HDTC',kw:['cdtc','huong dan','chi dan','2.5']},
@@ -204,40 +244,33 @@ const CKL=[
   {c:'2.7',n:'Tiêu chuẩn xếp hạng (TCNB)',kw:['tcnb','xep hang','2.7']},
 ];
 
-const ST={step:1,files:[],contents:{},proj:{},report:'',decision:''};
+const ST={step:1,files:[],rawContents:{},extractedData:{},proj:{},report:'',decision:''};
 
 function go(n){
-  for(let i=1;i<=5;i++) document.getElementById('s'+i).style.display=i===n?'':'none';
-  document.querySelectorAll('.s-item').forEach(el=>{const s=+el.dataset.s;el.classList.toggle('active',s===n);el.classList.toggle('done',s<n);});
+  for(let i=1;i<=6;i++) document.getElementById('s'+i).style.display=i===n?'':'none';
+  document.querySelectorAll('.si').forEach(el=>{const s=+el.dataset.s;el.classList.toggle('active',s===n);el.classList.toggle('done',s<n);});
   ST.step=n; window.scrollTo(0,0);
 }
-
 function gv(id){return document.getElementById(id).value.trim();}
-
 function s1next(){
   if(!gv('pn')){alert('Vui lòng nhập tên dự án');return;}
-  ST.proj={name:gv('pn'),hd:gv('phd'),ngay:gv('png'),dd:gv('pdd'),tg:gv('ptg'),gt:gv('pgt'),nv:gv('pnv'),nh:gv('pnh'),tu:gv('ptu'),nd:gv('pnd')};
+  ST.proj={name:gv('pn'),hd:gv('phd'),ngay:gv('png'),dd:gv('pdd'),tg:gv('ptg'),gt:gv('pgt'),tu:gv('ptu'),nv:gv('pnv'),nh:gv('pnh'),nd:gv('pnd'),gc:gv('pgc')};
   renderCK(); go(2);
 }
-
 function renderCK(){
   document.getElementById('cklist').innerHTML=CKL.map(c=>`<div class="ck" id="ck${c.c}"><span style="font-size:13px">⬜</span><span>[${c.c}] ${c.n}</span></div>`).join('');
 }
-
 function matchCK(fname){
   const n=fname.toLowerCase().replace(/[^a-z0-9\.]/g,' ');
   CKL.forEach(c=>{if(c.kw.some(k=>n.includes(k))){const el=document.getElementById('ck'+c.c);if(el){el.className='ck ok';el.querySelector('span').textContent='✅';}}});
 }
-
 const ICONS={pdf:'📄',docx:'📝',doc:'📝',xlsx:'📊',xls:'📊',jpg:'🖼️',jpeg:'🖼️',png:'🖼️'};
 const ficon=n=>{const e=(n.split('.').pop()||'').toLowerCase();return ICONS[e]||'📎';};
 const fsz=b=>b>1048576?(b/1048576).toFixed(1)+'MB':(b/1024).toFixed(0)+'KB';
-
 const dz=document.getElementById('dz');
 dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('drag')});
 dz.addEventListener('dragleave',()=>dz.classList.remove('drag'));
 dz.addEventListener('drop',e=>{e.preventDefault();dz.classList.remove('drag');handleFiles(e.dataTransfer.files)});
-
 function handleFiles(fl){
   [...fl].forEach(f=>{
     if(!ST.files.find(x=>x.name===f.name&&x.size===f.size)){ST.files.push(f);readFile(f);matchCK(f.name);}
@@ -245,151 +278,163 @@ function handleFiles(fl){
   renderFL();
   document.getElementById('fcnt').textContent=ST.files.length+' file';
 }
-
 function setDot(name,cls){const el=document.getElementById('dot-'+CSS.escape(name));if(el)el.className='dot '+cls;}
-
 function readFile(f){
   const ext=(f.name.split('.').pop()||'').toLowerCase();
   setDot(f.name,'da');
   if(ext==='pdf'){
-    // PDF: gửi lên server để đọc
     const fd=new FormData();fd.append('file',f);
     fetch('/api/extract-pdf',{method:'POST',body:fd})
-      .then(r=>r.json())
-      .then(d=>{ST.contents[f.name]={type:'text',text:d.text||'(rỗng)',name:f.name};setDot(f.name,'dg');})
-      .catch(()=>{ST.contents[f.name]={type:'text',text:'(Lỗi đọc PDF)',name:f.name};setDot(f.name,'dr');});
+      .then(r=>r.json()).then(d=>{ST.rawContents[f.name]={type:'text',text:d.text||'(rỗng)',name:f.name};setDot(f.name,'dg');})
+      .catch(()=>{ST.rawContents[f.name]={type:'text',text:'(Lỗi PDF)',name:f.name};setDot(f.name,'dr');});
   } else if(ext==='docx'){
     const r=new FileReader();r.onload=e=>{
-      mammoth.extractRawText({arrayBuffer:e.target.result}).then(res=>{ST.contents[f.name]={type:'text',text:res.value.slice(0,8000),name:f.name};setDot(f.name,'dg');}).catch(()=>{ST.contents[f.name]={type:'text',text:'(Lỗi đọc DOCX)',name:f.name};setDot(f.name,'dr');});
+      mammoth.extractRawText({arrayBuffer:e.target.result}).then(res=>{ST.rawContents[f.name]={type:'text',text:res.value.slice(0,10000),name:f.name};setDot(f.name,'dg');}).catch(()=>{ST.rawContents[f.name]={type:'text',text:'(Lỗi DOCX)',name:f.name};setDot(f.name,'dr');});
     };r.readAsArrayBuffer(f);
   } else if(['xlsx','xls'].includes(ext)){
     const r=new FileReader();r.onload=e=>{
-      try{const wb=XLSX.read(e.target.result,{type:'array'});let t='';wb.SheetNames.slice(0,3).forEach(s=>{t+=`\n[Sheet:${s}]\n`+XLSX.utils.sheet_to_csv(wb.Sheets[s]).slice(0,3000);});ST.contents[f.name]={type:'text',text:t.slice(0,8000),name:f.name};setDot(f.name,'dg');}catch{ST.contents[f.name]={type:'text',text:'(Lỗi Excel)',name:f.name};setDot(f.name,'dr');}
+      try{const wb=XLSX.read(e.target.result,{type:'array'});let t='';wb.SheetNames.slice(0,4).forEach(s=>{t+=`\n[Sheet:${s}]\n`+XLSX.utils.sheet_to_csv(wb.Sheets[s]).slice(0,4000);});ST.rawContents[f.name]={type:'text',text:t.slice(0,10000),name:f.name};setDot(f.name,'dg');}catch{ST.rawContents[f.name]={type:'text',text:'(Lỗi Excel)',name:f.name};setDot(f.name,'dr');}
     };r.readAsArrayBuffer(f);
-  } else if(['jpg','jpeg','png'].includes(ext)){
-    const r=new FileReader();r.onload=e=>{ST.contents[f.name]={type:'image',data:e.target.result,name:f.name};setDot(f.name,'dg');};r.readAsDataURL(f);
   } else {
-    ST.contents[f.name]={type:'text',text:`[File: ${f.name}]`,name:f.name};setDot(f.name,'dg');
+    ST.rawContents[f.name]={type:'text',text:`[File: ${f.name}]`,name:f.name};setDot(f.name,'dg');
   }
 }
-
-function removeFile(name){ST.files=ST.files.filter(f=>f.name!==name);delete ST.contents[name];renderFL();document.getElementById('fcnt').textContent=ST.files.length+' file';}
-
+function removeFile(name){ST.files=ST.files.filter(f=>f.name!==name);delete ST.rawContents[name];renderFL();document.getElementById('fcnt').textContent=ST.files.length+' file';}
 function renderFL(){
   document.getElementById('flist').innerHTML=ST.files.map(f=>`
     <div class="fi"><span style="font-size:14px">${ficon(f.name)}</span><span class="fn" title="${f.name}">${f.name}</span><span class="fsz">${fsz(f.size)}</span>
-    <div class="dot ${ST.contents[f.name]?'dg':'da'}" id="dot-${CSS.escape(f.name)}"></div>
+    <div class="dot ${ST.rawContents[f.name]?'dg':'da'}" id="dot-${CSS.escape(f.name)}"></div>
     <button class="rmb" onclick="removeFile('${f.name.replace(/'/g,"\\'")}')">✕</button></div>`).join('');
 }
-
 function s2next(){
   if(!ST.files.length){alert('Vui lòng upload ít nhất 1 file hồ sơ');return;}
-  go(3);setTimeout(runAppraisal,400);
+  go(3);setTimeout(runExtraction,400);
 }
 
-function setP(pct,lbl){
-  document.getElementById('pf').style.width=pct+'%';document.getElementById('ppct').textContent=pct+'%';
-  document.getElementById('plb').textContent=lbl;document.getElementById('ttxt').textContent=lbl;
+// ── Logging helpers ──────────────────────────────────────────────────────────
+function setP(pct,lbl,sfx=''){
+  const id=sfx?'2':'';
+  document.getElementById('pf'+id).style.width=pct+'%';document.getElementById('ppct'+id).textContent=pct+'%';
+  document.getElementById('plb'+id).textContent=lbl;if(!sfx)document.getElementById('ttxt').textContent=lbl;
 }
-function log(txt,cls=''){
-  const b=document.getElementById('logbox');if(b.textContent==='Chờ bắt đầu...') b.textContent='';
+function log(txt,cls='',sfx=''){
+  const b=document.getElementById('logbox'+sfx);if(b.textContent.includes('Chờ bắt đầu')) b.textContent='';
   if(cls){const s=document.createElement('span');s.className=cls;s.textContent=txt;b.appendChild(s);}
   else b.appendChild(document.createTextNode(txt));b.scrollTop=b.scrollHeight;
 }
 
-async function callAPI(system,user,max_tokens=8000){
-  const r=await fetch('/api/appraise',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({system,user,max_tokens})});
+async function callAPI(endpoint,body){
+  const r=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
   if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e.detail||`HTTP ${r.status}`);}
-  const d=await r.json();return d.content?.map(c=>c.text||'').join('\n')||'';
+  return r.json();
 }
 
-async function waitPdfReady(){
-  // Chờ tất cả PDF đọc xong (tối đa 30s)
-  const pdfFiles=ST.files.filter(f=>f.name.toLowerCase().endsWith('.pdf'));
-  if(!pdfFiles.length) return;
+// ── BƯỚC 1: Trích xuất số liệu từng file ────────────────────────────────────
+async function waitReady(){
+  const pdfs=ST.files.filter(f=>f.name.toLowerCase().endsWith('.pdf'));
+  if(!pdfs.length) return;
   for(let i=0;i<60;i++){
-    const done=pdfFiles.every(f=>ST.contents[f.name]);
-    if(done) return;
+    if(pdfs.every(f=>ST.rawContents[f.name])) return;
     await new Promise(r=>setTimeout(r,500));
   }
 }
 
-async function runAppraisal(){
+async function runExtraction(){
   setP(5,'Chờ server đọc xong PDF...');
-  log('═══════ PHIÊN THẨM ĐỊNH KHTK v2 ═══════\n','lo');
+  log('══════════ BƯỚC 1: TRÍCH XUẤT SỐ LIỆU ══════════\n','lo');
   log(`Dự án: ${ST.proj.name}\nSố file: ${ST.files.length}\n`);
-  log('─────────────────────────────────────────\n');
+  log('─────────────────────────────────────────────────\n');
 
-  await waitPdfReady();
-  setP(20,'Đang tổng hợp nội dung hồ sơ...');
-  log('► PDF đã đọc xong, tổng hợp nội dung...\n','lg');
+  await waitReady();
+  setP(15,'Bắt đầu trích xuất từng file...');
 
-  const summary=Object.values(ST.contents).map(c=>
-    c.type==='text'?`\n${'='.repeat(50)}\nFILE: ${c.name}\n${'='.repeat(50)}\n${c.text}`:
-    `\n[FILE ẢNH: ${c.name}]`
-  ).join('\n').slice(0,38000);
+  const total = ST.files.length;
+  let done = 0;
 
+  for(const f of ST.files){
+    const content = ST.rawContents[f.name];
+    if(!content) continue;
+    const pct = Math.round(15 + (done/total)*60);
+    setP(pct, `Đang trích xuất: ${f.name}`);
+    log(`\n► [${done+1}/${total}] ${f.name} `, 'lb');
+
+    try{
+      const res = await callAPI('/api/extract-structured',{
+        filename: f.name,
+        text: content.text || '',
+        project_info: ST.proj
+      });
+      ST.extractedData[f.name] = res.data || {};
+      const keys = Object.keys(ST.extractedData[f.name]).filter(k=>ST.extractedData[f.name][k]!==null);
+      log(`→ ${keys.length} trường số liệu\n`, 'lg');
+    }catch(e){
+      log(`→ lỗi: ${e.message}\n`, 'la');
+      ST.extractedData[f.name] = {};
+    }
+    done++;
+  }
+
+  setP(80,'Hiển thị kết quả trích xuất...');
+  renderExtracted();
+
+  setP(100,'Bước 1 hoàn thành!');
+  log('\n✔ BƯỚC 1 XONG — Đã trích xuất số liệu từ tất cả file\n','lg');
+  log('→ Nhấn "Bước 2" để tổng hợp báo cáo theo mẫu Cầu Châu Phong\n','lo');
+  document.getElementById('s3b').className='badge bgreen';
+  document.getElementById('s3b').textContent='Bước 1 ✓';
+  document.getElementById('tbox').style.display='none';
+  document.getElementById('s3act').style.display='';
+}
+
+function renderExtracted(){
+  const card = document.getElementById('extracted-data-card');
+  const list = document.getElementById('extracted-data-list');
+  card.style.display='';
+  const LABELS={
+    gia_tri_hop_dong:'Giá trị HĐ',gia_tri_tam_ung:'Tạm ứng',ty_le_tam_giu:'Tỷ lệ tạm giữ',
+    doanh_thu_tong:'DT tổng',doanh_thu_nghiem_thu:'DT cột NT',doanh_thu_tiet_kiem:'Tiết kiệm',
+    ngan_sach_dong_H_tong:'NS dòng H',ngan_sach_dong_H_chi_phi:'CP dòng H',
+    ty_le_hieu_qua_phan_tram:'Tỷ lệ hiệu quả %',tang_so_voi_ns:'Tăng so với NS',
+    cp_vat_tu_plhd:'CP vật tư PLHĐ',cp_nhan_cong_plhd:'CP nhân công PLHĐ',
+    cp_xmtb_plhd:'CP XMTB PLHĐ',moc_nhan_mat_bang:'Mốc nhận MB',moc_thi_cong:'Mốc thi công',
+    moc_nghiem_thu_ban_giao:'Mốc NT bàn giao',loai_file:'Loại file',
+  };
+  const fmt=v=>{if(v===null||v===undefined||v==='') return null;if(typeof v==='number') return new Intl.NumberFormat('vi-VN').format(v)+'đ';if(typeof v==='object') return JSON.stringify(v).slice(0,80);return String(v).slice(0,100);};
+  list.innerHTML = Object.entries(ST.extractedData).map(([fname,data])=>{
+    const rows = Object.entries(LABELS)
+      .filter(([k])=>data[k]!==null&&data[k]!==undefined&&data[k]!=='')
+      .map(([k,lbl])=>`<div class="data-row"><span class="data-key">${lbl}</span><span class="data-val">${fmt(data[k])}</span></div>`).join('');
+    if(!rows) return `<div class="data-card"><div class="fn">${fname}</div><div style="font-size:11px;color:var(--text3)">Không trích xuất được số liệu cụ thể</div></div>`;
+    return `<div class="data-card"><div class="fn">${fname}</div>${rows}</div>`;
+  }).join('');
+}
+
+// ── BƯỚC 2: Tổng hợp báo cáo ────────────────────────────────────────────────
+async function runAppraisal(){
+  go(4);
+  await new Promise(r=>setTimeout(r,200));
+  log('══════════ BƯỚC 2: TỔNG HỢP BÁO CÁO ══════════\n','lo','2');
+  setP(10,'Đang chuẩn bị dữ liệu đầu vào...','2');
+
+  // Tổng hợp tất cả nội dung + dữ liệu trích xuất
   const p=ST.proj;
   const fmt=n=>n?new Intl.NumberFormat('vi-VN').format(Number(n)):'—';
   const nvl=p.nv==='dtc'?'Vốn đầu tư công':p.nv==='tapd'?'Vốn Tập đoàn':'Nguồn khác';
 
-  const SYSTEM=`Bạn là chuyên gia thẩm định cao cấp của Ban Quản lý Hiệu suất và Cải tiến (Ban QLHS&CT), Tập đoàn Bắc Miền Trung.
+  // Tạo bảng tóm tắt số liệu đã trích xuất
+  const extractedSummary = Object.entries(ST.extractedData)
+    .map(([fname,data])=>{
+      const entries = Object.entries(data).filter(([k,v])=>v!==null&&v!==undefined&&v!=='');
+      if(!entries.length) return '';
+      return `\n[SỐ LIỆU TỪ FILE: ${fname}]\n` + entries.map(([k,v])=>`  ${k}: ${JSON.stringify(v)}`).join('\n');
+    }).join('\n');
 
-════════════════════════════════════════════════════
-BIỂU MẪU BÁO CÁO BẮT BUỘC — CẤU TRÚC 6 PHẦN
-════════════════════════════════════════════════════
-Báo cáo PHẢI theo đúng cấu trúc sau (không được đổi tên, không được bỏ phần nào):
+  // Nội dung thô từng file
+  const rawContent = Object.values(ST.rawContents)
+    .map(c=>`\n${'='.repeat(50)}\nFILE: ${c.name}\n${'='.repeat(50)}\n${(c.text||'').slice(0,6000)}`)
+    .join('\n').slice(0,40000);
 
-I. PHẠM VI THẨM ĐỊNH VÀ NGUYÊN TẮC TRÌNH BÀY
-   1. Phạm vi và phương pháp thẩm định
-   2. Thông tin về hợp đồng, nguồn vốn (ghi cụ thể số tiền, điều kiện tạm ứng, thu hồi, tạm giữ)
-
-II. THÔNG TIN CHUNG (tóm tắt điểm ảnh hưởng quyết định)
-   Bảng thông tin dự án (5 dòng: tên DA, địa điểm, HĐ, thời gian, nhóm đặc thù)
-
-III. ĐÁNH GIÁ ĐIỀU KIỆN LẬP KHTK (HỢP LỆ – LOGIC – KHẢ THI)
-   1. Bảng 1 – Kiểm tra hồ sơ điều kiện (cột: Nhóm hồ sơ | Tình trạng | Nhận xét hợp lệ | Ảnh hưởng đến khả thi | Kiến nghị)
-   2. Bảng 2 – Đối chiếu mặt bằng ↔ sản lượng ↔ doanh thu (cột: Hạng mục | MB cần BG | Thời điểm cần | TĐ dự kiến BG | Đánh giá | Kiến nghị)
-   3. Bảng 3 – Đối chiếu KH cung ứng ↔ tiến độ (cột: Nhóm NL | Nhu cầu | KH cung ứng | Điểm nghẽn | Đánh giá | Kiến nghị)
-   4. Bảng 4 – Đối chiếu HSTK điều chỉnh ↔ tiến độ (cột: Hạng mục | Tình trạng HSTK | Mốc cần | Mốc dự kiến | Tác động | Kiến nghị)
-   5. Bảng 5 – Đánh giá CDTC/HDTC (cột: Nội dung | Đủ/Thiếu | Không nhất quán | Không phù hợp ĐMNB | Tác động | Kiến nghị)
-
-IV. PHÂN TÍCH NGÂN SÁCH (ĐẦY ĐỦ – NHẤT QUÁN – BẤT THƯỜNG – BIÊN LỢI NHUẬN)
-   1. Bảng 6 – Kiểm tra cấu phần ngân sách (cột: Cấu phần | Đầy đủ/Thiếu | Sai sót | Đối chiếu nguồn | Nhận xét | Kiến nghị)
-   2. Bảng 7 – Bất thường DT–CP–dòng tiền (cột: Hạng mục | DT KH | CP KH | Chênh lệch | Bất thường/NN | Kiến nghị)
-   3. Phụ biểu 01 – Tính dòng tiền thu theo tháng (cột: Tháng | Giá trị cột NT | TL thu hồi TU | Thu hồi TU | Tạm giữ % | Tạm giữ | DT ròng)
-   4. Bảng 8 – Phân tích biên lợi nhuận (cột: Chỉ tiêu | Giá trị | Chuẩn so sánh | Chênh lệch | NN gốc | Kiến nghị)
-   5. Bảng 9 – Tổng hợp các mục vượt ngân sách (cột: Khoản mục | Giá trị vượt | Nguyên nhân | Giải pháp)
-
-V. ĐÁNH GIÁ SO VỚI MỤC TIÊU NĂM BSC
-   1. Bảng 10 – Đối chiếu với mục tiêu năm BSC (cột: Mục tiêu năm | Chỉ tiêu MT năm | Chỉ tiêu KHTK | Đạt/KĐ | Giải thích | Kiến nghị)
-   2. Bảng 11 – Đối chiếu ràng buộc hợp đồng ↔ KHTK (cột: Nội dung | RB HĐ | Thể hiện trong KHTK | Rủi ro | Đánh giá | Kiến nghị)
-
-VI. KẾT LUẬN – KIẾN NGHỊ
-   1. Kết luận thẩm định: chọn đúng 1 trong 3 mức (A)/(B)/(C)
-   2. Bảng 12 – Vấn đề trọng yếu (cột: TT | Vấn đề | Mức độ | Kiến nghị/BP | Đơn vị TR | Thời hạn)
-   3. Bảng 13 – Chương trình giảm lỗ (nếu lỗ): 7 đầu mối cụ thể, lượng hóa từng đồng
-   4. Kiến nghị điều kiện ràng buộc khi phê chuẩn (5 nhóm: mặt bằng, HSTK, cung ứng, ngân sách, ATLĐ)
-
-════════════════════════════════════════════════════
-NGUYÊN TẮC BẮT BUỘC
-════════════════════════════════════════════════════
-1. Tên thống nhất: Ban Quản lý Hiệu suất và Cải tiến (Ban QLHS&CT)
-2. Ngân sách vòng đời → dùng DÒ‌NG H của file 1.3. Dòng I chỉ dùng khi so sánh BSC (sau tách NS QLDN)
-3. File 1.5 KH doanh thu: cột "Không nghiệm thu" → gọi là "Tiết kiệm"
-4. "Ban Tài Chính _ Kế toán" → viết "Ban tài chính"
-5. Bảng 1: CHỈ kiểm tra hình thức (đủ hồ sơ/chữ ký/ngày/biểu mẫu) — KHÔNG kết luận kỹ thuật
-6. Không nêu đích danh đơn vị liên kết → dùng "Đơn vị cung ứng" / "Đơn vị cung cấp dịch vụ"
-7. Chương trình giảm lỗ bắt buộc ≥7% giá trị lỗ; lượng hóa 7 đầu mối: (1) HDTC chi tiết (2) CP gián tiếp (3) CP không chính thức (4) VT/NC Đơn vị cung ứng (5) XM/TB Đơn vị cung ứng (6) Ban tài chính (7) Tổng tối thiểu
-8. Kết luận 3 mức: (A) Đủ điều kiện / (B) ĐỦ ĐIỀU KIỆN CÓ ĐIỀU KIỆN / (C) Chưa đủ điều kiện
-9. Nếu đã ký HĐ, tỷ suất âm nhưng không có sai sót lớn → kết luận (B), không kết luận (C)
-10. Thiếu số liệu → ghi đúng: "Chưa có căn cứ trong hồ sơ để kết luận" — KHÔNG bịa số
-11. Phụ biểu 01 dòng tiền: tính từ cột Nghiệm thu; trừ thu hồi TU theo tỷ lệ; trừ tạm giữ theo HĐ
-12. KHÔNG lặp lại toàn bộ nội dung hồ sơ — chỉ nêu điểm trọng yếu, bất thường, rủi ro, kiến nghị
-
-ĐỊNH DẠNG: HTML thuần (không DOCTYPE/html/body). Dùng: <h2>, <h3>, <p>, <table>, <tr>, <th>, <td>, <ul>, <li>. Mỗi bảng đầy đủ tiêu đề cột và nội dung.`;
-
-  const USER=`Thẩm định KHTK dự án: ${p.name}
+  const USER = `Thẩm định KHTK dự án: ${p.name}
 
 THÔNG TIN DỰ ÁN:
 • Hợp đồng: ${p.hd||'—'}  |  Ngày ký: ${p.ngay||'—'}
@@ -400,60 +445,60 @@ THÔNG TIN DỰ ÁN:
 • Nhóm/Đặc thù: ${p.nh||'—'}
 • Người thẩm định: ${p.nd||'—'}
 
-NỘI DUNG HỒ SƠ ĐÃ ĐỌC (${ST.files.length} file, trong đó PDF đọc trực tiếp bởi server):
-${summary}
+════ DỮ LIỆU ĐÃ TRÍCH XUẤT VÀ CHUẨN HOÁ TỪ BƯỚC 1 (ưu tiên dùng số liệu này):
+${extractedSummary}
 
-─────────────────────────────────────────────────────
-YÊU CẦU: Thẩm định đầy đủ theo đúng 6 phần và 13 bảng trong biểu mẫu bắt buộc.
-Với số liệu cụ thể từ hồ sơ (ngân sách, doanh thu, dòng tiền) phải lấy ĐÚNG từ nội dung file đã cung cấp.
-Với phần thiếu số liệu ghi rõ "Chưa có căn cứ trong hồ sơ" và kiến nghị bổ sung.
-Phụ biểu 01 PHẢI có bảng tính dòng tiền từng tháng nếu có đủ số liệu từ file 1.5.
-Xuất HTML thuần từ <div> trở xuống.`;
+════ NỘI DUNG THÔ TỪNG FILE (đối chiếu thêm):
+${rawContent}
 
-  setP(35,'Đang gọi AI thẩm định (lần 1/2)...');
-  log('\n► Gửi hồ sơ lên AI — đang phân tích...\n','lg');
+────────────────────────────────────────────────────
+YÊU CẦU: Viết báo cáo thẩm định KHTK đầy đủ theo ĐÚNG biểu mẫu 6 phần (I→VI) và 13 bảng như ví dụ mẫu Cầu Châu Phong đã cung cấp.
+Dùng SỐ LIỆU CỤ THỂ từ dữ liệu trích xuất trên — không viết chung chung.
+Nếu thiếu số liệu → ghi "Chưa có căn cứ trong hồ sơ để kết luận" và kiến nghị bổ sung.
+Xuất HTML thuần từ <div>.`;
+
+  setP(30,'Đang gọi AI tổng hợp báo cáo...','2');
+  log('► Gửi dữ liệu lên AI (áp dụng mẫu Cầu Châu Phong)...\n','lb','2');
 
   try{
-    ST.report=await callAPI(SYSTEM,USER,8000);
-    setP(75,'Nhận kết quả, đang soạn Quyết định...');
-    log('► Báo cáo thẩm định ✓\n','lg');
-    log('► Đang soạn dự thảo Quyết định...\n','lg');
+    const res = await callAPI('/api/appraise',{system:'', user:USER, max_tokens:8000});
+    ST.report = res.content?.map(c=>c.text||'').join('\n')||'';
+    setP(75,'Nhận báo cáo, đang soạn Quyết định...','2');
+    log('► Báo cáo thẩm định ✓\n','lg','2');
+    log('► Đang soạn dự thảo Quyết định...\n','lb','2');
 
     await genDecision();
 
-    setP(100,'Hoàn thành!');
-    log('\n✔ THẨM ĐỊNH HOÀN THÀNH\n','lg');
-    log('→ Nhấn "Xem báo cáo" để xem kết quả\n','lo');
-    document.getElementById('s3b').className='badge bgreen';
-    document.getElementById('s3b').textContent='Hoàn thành ✓';
-    document.getElementById('tbox').style.display='none';
-    document.getElementById('s3act').style.display='';
-    buildReport();buildDecision();
+    setP(100,'Hoàn thành!','2');
+    log('\n✔ HOÀN THÀNH — Báo cáo và Quyết định đã sẵn sàng\n','lg','2');
+    document.getElementById('s4b').className='badge bgreen';
+    document.getElementById('s4b').textContent='Hoàn thành ✓';
+    document.getElementById('tbox2').style.display='none';
+    document.getElementById('s4act').style.display='';
+    buildReport(); buildDecision();
   }catch(err){
-    setP(0,'Lỗi!');
-    log(`\n✗ LỖI: ${err.message}\n`,'lr');
-    log('Kiểm tra: server đang chạy, API key hợp lệ, kết nối mạng.\n');
-    document.getElementById('s3b').className='badge bred';
-    document.getElementById('s3b').textContent='Lỗi';
-    document.getElementById('tbox').style.display='none';
+    setP(0,'Lỗi!','2');
+    log(`\n✗ LỖI: ${err.message}\n`,'lr','2');
+    document.getElementById('s4b').className='badge bred';
+    document.getElementById('s4b').textContent='Lỗi';
+    document.getElementById('tbox2').style.display='none';
   }
 }
 
 async function genDecision(){
   const p=ST.proj;
   try{
-    ST.decision=await callAPI(
-      'Bạn là chuyên gia soạn thảo văn bản pháp lý nội bộ của Ban QLHS&CT, Tập đoàn Bắc Miền Trung. Không nêu đích danh đơn vị liên kết; dùng "Đơn vị cung ứng" / "Đơn vị cung cấp dịch vụ".',
-      `Dựa trên Báo cáo thẩm định KHTK sau, soạn QUYẾT ĐỊNH PHÊ DUYỆT KHTK chuẩn gồm:
-Điều 1 – Phê duyệt: bảng TT | Nội dung mục tiêu phê duyệt | Giá trị/Mốc | Điều kiện
-Điều 2 – Phân công: bảng TT | Nội dung giao việc | Đơn vị chủ trì | Thời hạn
-Điều 3 – Kiểm soát: 3 khoản (không giao khoán khi chưa đủ ĐK; mọi thay đổi phải báo cáo; xử lý trách nhiệm)
-Điều 4 – Hiệu lực thi hành
-Nếu lỗ → Điều 2 PHẢI có mục chương trình giảm lỗ lượng hóa từng đồng.
-Dự án: ${p.name} | HĐ: ${p.hd||'—'}
+    const res = await callAPI('/api/appraise',{
+      system:'Bạn là chuyên gia soạn thảo văn bản pháp lý của Ban QLHS&CT. Không nêu đích danh đơn vị liên kết; dùng "Đơn vị cung ứng"/"Đơn vị cung cấp dịch vụ". Dùng đúng mẫu Quyết định phê duyệt KHTK chuẩn.',
+      user:`Soạn QUYẾT ĐỊNH PHÊ DUYỆT KHTK cho dự án: ${p.name} | HĐ: ${p.hd||'—'}
+Gồm: Điều 1 (bảng mục tiêu phê duyệt) + Điều 2 (bảng phân công) + Điều 3 (kiểm soát) + Điều 4 (hiệu lực).
+Nếu lỗ → Điều 2 phải có mục chương trình giảm lỗ lượng hóa từng đồng theo 7 đầu mối.
 BÁO CÁO: ${ST.report.slice(0,5000)}
-Xuất HTML thuần từ <div>.`,3000);
-  }catch{ST.decision='<p>Không tạo được. Vui lòng thử lại.</p>';}
+Xuất HTML thuần từ <div>.`,
+      max_tokens:3000
+    });
+    ST.decision = res.content?.map(c=>c.text||'').join('\n')||'';
+  }catch{ST.decision='<p>Không tạo được Quyết định. Vui lòng thử lại.</p>';}
 }
 
 function sHTML(h){
@@ -488,7 +533,6 @@ function buildReport(){
     </div>
     <div class="card" style="padding:26px"><div style="line-height:1.8">${sHTML(ST.report)}</div></div>`;
 }
-
 function buildDecision(){
   const p=ST.proj;
   document.getElementById('deccontent').innerHTML=`
@@ -500,14 +544,11 @@ function buildDecision(){
       <div style="font-size:11px;color:var(--text3);margin-top:5px">CHỦ TỊCH HỘI ĐỒNG QUẢN TRỊ CÔNG TY CỔ PHẦN TÂY AN</div>
     </div>
     <div class="card" style="padding:26px"><div style="line-height:1.8">${sHTML(ST.decision)}</div></div>
-    <div class="card">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;text-align:center;padding:8px">
-        <div><div style="font-size:11px;color:var(--text3)">TRƯỞNG BAN QLHS&CT</div><div style="height:48px"></div><div style="font-size:11px;color:var(--text3)">(Ký, ghi rõ họ tên)</div></div>
-        <div><div style="font-size:11px;color:var(--text3)">TM. HỘI ĐỒNG QUẢN TRỊ — CHỦ TỊCH</div><div style="height:48px"></div><div style="font-size:11px;color:var(--text3)">(Ký, ghi rõ họ tên)</div></div>
-      </div>
-    </div>`;
+    <div class="card"><div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;text-align:center;padding:8px">
+      <div><div style="font-size:11px;color:var(--text3)">TRƯỞNG BAN QLHS&CT</div><div style="height:48px"></div><div style="font-size:11px;color:var(--text3)">(Ký, ghi rõ họ tên)</div></div>
+      <div><div style="font-size:11px;color:var(--text3)">TM. HỘI ĐỒNG QUẢN TRỊ — CHỦ TỊCH</div><div style="height:48px"></div><div style="font-size:11px;color:var(--text3)">(Ký, ghi rõ họ tên)</div></div>
+    </div></div>`;
 }
-
 renderCK();
 </script>
 </body>
